@@ -1,0 +1,10 @@
+{
+  "name": "TestMod",
+  "version": "0.0.1",
+  "factorio_version" : "0.16.51",
+  "title": "Test Mod",
+  "author": "Johannes Doll",
+  "homepage": "https://www.google.com",
+  "description": "This mod serves only development testing purposes. It's kind of a playground.",
+  "dependencies" : ["base >= 0.16.51"]
+}
