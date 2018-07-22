@@ -9,15 +9,22 @@ function BluePrintMirrorFunction:new(entities)
 end
 
 function BluePrintMirrorFunction:mirror_horizontal()
+    for key, entity in pairs(self.entities) do
+        self:mirror_position_horizontal(entity.position)
+    end
+end
+
+function BluePrintMirrorFunction:mirror_position_horizontal(position)
+    local point = Point:new(position)
+    point:mirror_horizontal()
+end
+
+function BluePrintMirrorFunction:print_entities()
     local result = ""
     for key, entity in pairs(self.entities) do
-        --self:mirror_position_horizontal(Point:new(entity))
         result = result .. self:entity_to_string(entity)
     end
     return result
-end
-
-function BluePrintMirrorFunction:mirror_position_horizontal(point)
 end
 
 function BluePrintMirrorFunction:entity_to_string(entity)
