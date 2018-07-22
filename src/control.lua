@@ -4,9 +4,14 @@
 --- DateTime: 6/19/18 9:12 AM
 ---
 local string_helper = require("helper.string-helper")
+local custom_defines = require("data")
 
-function on_item_mined(event)
-    local player = game.players[event.player_index]
+local function get_current_player(event)
+    return game.players[event.player_index]
+end
+
+local function on_item_mined(event)
+    local player = get_current_player(event)
     local item = event.item_stack
     local name = player.name
 
@@ -17,4 +22,16 @@ function on_item_mined(event)
     player.print(name .. " mined " .. item.count .. " " .. item.name)
 end
 
+function on_mirror_item(event)
+    local player = get_current_player(event)
+    local current_item = player.cursor_stack
+
+    if current_item.is_blueprint then
+        player.print("Is a blueprint")
+    end
+
+    player.print(player.name .. " requested mirroring of item " .. current_item.name)
+end
+
+script.on_event(custom_defines.input.mirror, on_mirror_item)
 script.on_event(defines.events.on_player_mined_item, on_item_mined)

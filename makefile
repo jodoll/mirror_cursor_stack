@@ -2,7 +2,9 @@ OUT = build
 VERSION = 0.0.1
 NAME = TestMod
 
-DEPLOYMENT_PATH = factorio/factorio/mods
+GAME_PATH = game/factorio
+EXECUTABLE_PATH = ${GAME_PATH}/bin/x64
+DEPLOYMENT_PATH = ${GAME_PATH}/mods
 SRC_PATH = src
 
 TARGET_NAME = ${NAME}_${VERSION}
@@ -20,6 +22,9 @@ build:
 
 deploy: build
 	cp ${ARTIFACT_PATH} ${DEPLOYMENT_PATH}
+
+run: deploy
+	./${EXECUTABLE_PATH}/factorio
 
 .PHONY: clean
 clean:
