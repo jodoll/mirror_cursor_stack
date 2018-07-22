@@ -1,6 +1,6 @@
 OUT = build
-VERSION = 0.0.1
-NAME = TestMod
+VERSION = 0.1.0
+NAME = MirrorCursorStack
 
 GAME_PATH = game/factorio
 EXECUTABLE_PATH = ${GAME_PATH}/bin/x64

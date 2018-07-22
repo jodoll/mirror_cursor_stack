@@ -1,8 +1,8 @@
 {
-  "name": "Mirror Cursor Stack",
+  "name": "MirrorCursorStack",
   "version": "0.1.0",
   "factorio_version": "0.16.51",
-  "title": "Test Mod",
+  "title": "Mirror Cursor Stack",
   "author": "Johannes Doll",
   "homepage": "https://github.com/jodoll/mirror_cursor_stack",
   "description": "This mod mirrors the current cursor stack along the x or y axis. Shortcuts are SHIFT + (W, A, S, D).",
