@@ -1,3 +1,11 @@
+local function get_accessors(position)
+    if (position["x"] ~= nil) then
+        return { "x", "y" }
+    else
+        return { 1, 2 }
+    end
+end
+
 Point = {}
 
 function Point:new(position)
@@ -6,18 +14,19 @@ function Point:new(position)
     self.__index = self
 
     self.position = position
+    self.accessors = get_accessors(position)
 
     return self.object
 end
 
 function Point:x()
-    return self.position[1] or self.position["x"]
+    return self.position[self.accessors[1]]
 end
 
 function Point:y()
-    return self.position[2] or self.position["y"]
+    return self.position[self.accessors[2]]
 end
 
 function Point:to_string()
-    return "(" .. position:x() .. "|" .. position:y() .. ")"
+    return "(" .. self:x() .. "|" .. self:y() .. ")"
 end

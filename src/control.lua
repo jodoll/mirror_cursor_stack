@@ -24,7 +24,7 @@ function on_mirror_item(event)
 
     if current_item.is_blueprint then
         local mirror_function = BluePrintMirrorFunction:new(current_item.get_blueprint_entities())
-        local result = mirror_function:mirror()
+        local result = mirror_function:mirror_horizontal()
         print(result)
         player.print(result)
     end
