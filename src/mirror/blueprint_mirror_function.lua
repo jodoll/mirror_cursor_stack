@@ -1,4 +1,5 @@
 require("mirror.mirror_function")
+require("mirror.direction")
 require("mirror.point")
 
 BluePrintMirrorFunction = MirrorFunction:new()
@@ -11,12 +12,21 @@ end
 function BluePrintMirrorFunction:mirror_horizontal()
     for key, entity in pairs(self.entities) do
         self:mirror_position_horizontal(entity.position)
+        self:mirror_direction(entity)
     end
 end
 
 function BluePrintMirrorFunction:mirror_position_horizontal(position)
     local point = Point:new(position)
     point:mirror_horizontal()
+end
+
+function BluePrintMirrorFunction:mirror_direction(entity)
+    if entity.direction ~= nil then
+        game.print("Old direction: " .. entity.direction)
+        entity.direction = Direction.mirror_horizontal(entity.direction)
+        game.print("New direction: " .. entity.direction)
+    end
 end
 
 function BluePrintMirrorFunction:print_entities()
