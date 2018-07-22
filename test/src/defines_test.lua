@@ -7,5 +7,5 @@ require("helper.mock_data"):init_mock()
 local defines = require("data")
 
 function test_defines_object()
-    assert_equal("input-event-mirror-item", defines.input.mirror)
+    assert_equal("input-event-mirror-item", defines.input.mirror_horizontal)
 end

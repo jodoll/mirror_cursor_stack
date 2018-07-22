@@ -18,7 +18,7 @@ local function on_item_mined(event)
     player.print(name .. " mined " .. item.count .. " " .. item.name)
 end
 
-function on_mirror_item(event)
+function on_mirror_item_horizontal(event)
     local player = get_current_player(event)
     local current_item = player.cursor_stack
 
@@ -29,5 +29,19 @@ function on_mirror_item(event)
     end
 end
 
-script.on_event(custom_defines.input.mirror, on_mirror_item)
+function on_mirror_item_vertical(event)
+    local player = get_current_player(event)
+    local current_item = player.cursor_stack
+
+    if current_item.is_blueprint then
+        local mirror_function = BluePrintMirrorFunction:new(current_item.get_blueprint_entities())
+        mirror_function:mirror_vertical()
+        current_item.set_blueprint_entities(mirror_function.entities)
+    end
+end
+
+script.on_event(custom_defines.input.mirror_horizontal_a, on_mirror_item_horizontal)
+script.on_event(custom_defines.input.mirror_horizontal_d, on_mirror_item_horizontal)
+script.on_event(custom_defines.input.mirror_vertical_w, on_mirror_item_vertical)
+script.on_event(custom_defines.input.mirror_vertical_s, on_mirror_item_vertical)
 script.on_event(defines.events.on_player_mined_item, on_item_mined)
