@@ -36,7 +36,8 @@ function on_mirror_item_vertical(event)
     if current_item.is_blueprint then
         local mirror_function = BluePrintMirrorFunction:new(current_item.get_blueprint_entities())
         mirror_function:mirror_vertical()
-        current_item.set_blueprint_entities(mirror_function.entities)
+        current_item:clear_blueprint()
+        current_item:set_blueprint_entities(mirror_function.entities)
     end
 end
 
