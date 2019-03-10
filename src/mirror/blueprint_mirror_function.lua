@@ -4,47 +4,50 @@ require("mirror.point")
 
 BluePrintMirrorFunction = MirrorFunction:new()
 
-function BluePrintMirrorFunction:new(entities)
+function BluePrintMirrorFunction:new(entities, direction, vertical)
     self.entities = entities
+    self.direction = direction
+    self.requested_vertical_mirroring = vertical
     return self.object
 end
 
-function BluePrintMirrorFunction:mirror_horizontal()
+function BluePrintMirrorFunction:mirror()
+    self.mirror_actually_vertical = self:calculate_actual_mirror_direction()
+    self:mirror_all_entities()
+end
+
+function BluePrintMirrorFunction:calculate_actual_mirror_direction()
+    local invert_axis = direction == defines.direction.north or direction == defines.direction.south or direction == nil
+    return self.requested_vertical_mirroring ~= invert_axis
+end
+
+function BluePrintMirrorFunction:mirror_all_entities()
     for key, entity in pairs(self.entities) do
-        self:mirror_position_horizontal(entity.position)
-        self:mirror_direction_horizontal(entity)
+        self:mirror_position(entity.position)
+        self:mirror_direction(entity)
     end
 end
 
-function BluePrintMirrorFunction:mirror_position_horizontal(position)
+function BluePrintMirrorFunction:mirror_position(position)
     local point = Point:new(position)
-    point:mirror_horizontal()
-end
 
-function BluePrintMirrorFunction:mirror_direction_horizontal(entity)
-    print(self:entity_to_string(entity))
-    if entity.direction ~= nil then
-        entity.direction = Direction.mirror_horizontal(entity.direction)
+    if mirror_actually_vertical then
+        point:mirror_vertical()
+    else
+        point:mirror_horizontal()
     end
 end
 
-function BluePrintMirrorFunction:mirror_vertical()
-    for key, entity in pairs(self.entities) do
-        self:mirror_position_vertical(entity.position)
-        self:mirror_direction_vertical(entity)
-    end
-end
-
-function BluePrintMirrorFunction:mirror_position_vertical(position)
-    local point = Point:new(position)
-    point:mirror_vertical()
-end
-
-function BluePrintMirrorFunction:mirror_direction_vertical(entity)
-    print(self:entity_to_string(entity))
+function BluePrintMirrorFunction:mirror_direction(entity)
     -- direction may be nil when facing north
-    -- also when rotating a blueprint the directions of its entities do NOT change, the rotation of the blueprint is added instead
-    entity.direction = Direction.mirror_vertical(entity.direction or 0)
+    -- Also: setting direction on entity without a direction doesn't hurt
+    local currentDirection = entity.direction or defines.direction.north
+
+    if mirror_actually_vertical then
+        entity.direction = Direction.mirror_vertical(currentDirection)
+    else
+        entity.direction = Direction.mirror_horizontal(currentDirection)
+    end
 end
 
 function BluePrintMirrorFunction:print_entities()
